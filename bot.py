@@ -1,7 +1,7 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
 
-TOKEN = "8242893940:AAGQzM2HfFtJkpdO2R5hI_J7Ao1ins41AzM"
+TOKEN = "8242893940:AAGQzM2HfFtJkpdO2R5hI_J7Ao1ins41AzM" ADMIN_ID = 1764395818
 
 # ===== رسالة البداية + الأزرار =====
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -16,7 +16,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         resize_keyboard=True,
         one_time_keyboard=False
     )
+user = update.message.from_user
+    notify_text = (
+        "📩 رسالة جديدة للبوت\n\n"
+        f"👤 الاسم: {user.first_name}\n"
+        f"🔗 المستخدم: @{user.username}\n"
+        f"🆔 ID: {user.id}\n\n"
+        f"💬 الرسالة:\n{text}"
+    )
 
+    await context.bot.send_message(
+        chat_id=ADMIN_ID,
+        text=notify_text
+    )
     await update.message.reply_text(
         "أهلاً وسهلاً 👋😊\n"
         "أنا المساعد الآلي الخاص بك 🤖\n"
