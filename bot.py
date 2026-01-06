@@ -1,8 +1,11 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
 
+# توكن البوت
 TOKEN = "8242893940:AAGQzM2HfFtJkpdO2R5hI_J7Ao1ins41AzM"
-ADMIN_ID = 1764395818
+
+# Telegram ID الخاص بك (لتلقي الرسائل)
+ADMIN_ID = 1764395818  # ضع رقمك الحقيقي هنا
 
 # ===== رسالة البداية + الأزرار =====
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -11,25 +14,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ["🕒 أوقات العمل", "📞 تواصل معنا"],
         ["❓ مساعدة", "👨‍💼 التحدث مع شخص"]
     ]
-
     reply_markup = ReplyKeyboardMarkup(
         keyboard=keyboard,
         resize_keyboard=True,
         one_time_keyboard=False
     )
-user = update.message.from_user
-    notify_text = (
-        "📩 رسالة جديدة للبوت\n\n"
-        f"👤 الاسم: {user.first_name}\n"
-        f"🔗 المستخدم: @{user.username}\n"
-        f"🆔 ID: {user.id}\n\n"
-        f"💬 الرسالة:\n{text}"
-    )
 
-    await context.bot.send_message(
-        chat_id=ADMIN_ID,
-        text=notify_text
-    )
     await update.message.reply_text(
         "أهلاً وسهلاً 👋😊\n"
         "أنا المساعد الآلي الخاص بك 🤖\n"
@@ -38,11 +28,25 @@ user = update.message.from_user
         reply_markup=reply_markup
     )
 
-# ===== الردود الذكية =====
+# ===== الردود الذكية + إشعار للمشرف =====
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower()
+    user = update.message.from_user
 
-    # تحيات
+    # إشعار للمشرف (لك)
+    notify_text = (
+        "📩 رسالة جديدة للبوت\n\n"
+        f"👤 الاسم: {user.first_name}\n"
+        f"🔗 المستخدم: @{user.username}\n"
+        f"🆔 ID: {user.id}\n\n"
+        f"💬 الرسالة:\n{text}"
+    )
+    await context.bot.send_message(
+        chat_id=ADMIN_ID,
+        text=notify_text
+    )
+
+    # الردود الطبيعية
     if any(word in text for word in ["السلام", "السلام عليكم", "سلام"]):
         reply = "وعليكم السلام ورحمة الله وبركاته 🌸\nكيف نقدر نعاونك اليوم؟ 😊"
 
@@ -52,7 +56,6 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif "كيف حالك" in text:
         reply = "الحمد لله بخير 😊\nإن شاء الله تكون بخير أنت أيضًا 🌷"
 
-    # الأزرار
     elif "من أنت" in text:
         reply = (
             "أنا بوت رد تلقائي 🤖\n"
@@ -77,9 +80,8 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif "تواصل" in text or "اتصال" in text:
         reply = (
             "📞 طرق التواصل:\n"
-            "📱 واتساب: 0669272484\n"
-            "✉️ تلغرام: من هنا\n\n"
-            "نرد في أقرب وقت ممكن 😊"
+            "📱 واتس اب 0669272484\n"
+            "✉️ تلغرام: من هنا 😊"
         )
 
     elif "مساعدة" in text:
@@ -100,15 +102,12 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "يرجى الانتظار قليلًا ⏳"
         )
 
-    # شكر
     elif any(word in text for word in ["شكرا", "شكراً", "merci", "thanks"]):
         reply = "العفو 😊🌷 يسعدنا خدمتك في أي وقت"
 
-    # وداع
     elif any(word in text for word in ["باي", "وداعا", "إلى اللقاء"]):
         reply = "في أمان الله 👋🙂 نتشرف بزيارتك مرة أخرى"
 
-    # رد افتراضي طبيعي
     else:
         reply = (
             "وصلتني رسالتك 👍\n"
@@ -116,6 +115,7 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "شكراً على ثقتك بنا 🤝"
         )
 
+    # إرسال الرد للمستخدم
     await update.message.reply_text(reply)
 
 # ===== تشغيل البوت =====
