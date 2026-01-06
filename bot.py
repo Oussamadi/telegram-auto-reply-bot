@@ -1,7 +1,7 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
 
-TOKEN = "8242893940:AAGMo6Gtwyh0dySZRGtDlV4BIaWEiHSFrPY"
+TOKEN = "8242893940:AAGQzM2HfFtJkpdO2R5hI_J7Ao1ins41AzM"
 
 # ===== رسالة البداية + الأزرار =====
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
