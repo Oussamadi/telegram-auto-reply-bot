@@ -1,7 +1,8 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
 
-TOKEN = "8242893940:AAGQzM2HfFtJkpdO2R5hI_J7Ao1ins41AzM" ADMIN_ID = 1764395818
+TOKEN = "8242893940:AAGQzM2HfFtJkpdO2R5hI_J7Ao1ins41AzM"
+ADMIN_ID = 1764395818
 
 # ===== رسالة البداية + الأزرار =====
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
